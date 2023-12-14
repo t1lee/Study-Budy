@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GPT Chatbot</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GPT Chatbot</h1>
+        <div id="chatContainer"></div>
+        <input type="text" id="userInput" placeholder="Type your message..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chatContainer');
+        const userInput = document.getElementById('userInput');
+
+        function createMessage(message, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            messageDiv.innerText = message;
+            if (isUser) {
+                messageDiv.style.textAlign = 'right';
+                messageDiv.style.backgroundColor = '#eaf6ff';
+            }
+            chatContainer.appendChild(messageDiv);
+        }
+
+        function sendMessage() {
+            const userMessage = userInput.value;
+            userInput.value = '';
+            createMessage(userMessage, true);
+
+            // Send user message to the chatbot API
+            const apiKey = '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'; // Replace with your API key
+            const apiUrl = 'https://chat.openai.com/g/g-7jawIYlnO-study-buddy'; // Replace with your chatbot API endpoint
+            
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    message: userMessage
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const botResponse = data.response; // Replace 'data.response' with the appropriate path to the response in the API response object
+                createMessage(botResponse, false);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
