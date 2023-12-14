@@ -1,1 +1,1 @@
-Study Buddy
+A tool that offers a tailored unique learning experience to students taking LIGN 167 'Deep Learning for Natural Language Understanding'. By leveraging the capabilities of ChatGPT-4 and its API, the system will suggest additional resources (articles, tutorials, examples) based on individual student performance, aligning with their strengths, weaknesses, and course progression.
